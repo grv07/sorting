@@ -47,11 +47,3 @@ fn merge_sort(input: &[i32]) -> Vec<i32> {
 
     res
 }
-
-#[cfg(test)]
-mod test {
-    #[test]
-    fn check() {
-        // merge_sort(vec![1, 3, 2, 4, 6, 5, 89, 45])
-    }
-}
