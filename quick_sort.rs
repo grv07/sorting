@@ -1,3 +1,42 @@
+fn _partition_hoares(input: &mut [i32], low: i32, high: i32) -> i32 {
+    let pivot = input[low as usize];
+    let mut i = low - 1;
+    let mut j = high + 1;
+
+    loop {
+        i += 1;
+        while input[i as usize] < pivot {
+            i += 1;
+        }
+
+        j -= 1;
+        while input[j as usize] > pivot {
+            j -= 1;
+        }
+
+        if i >= j {
+            return j;
+        }
+
+        input.swap(i as usize, j as usize);
+    }
+}
+
+fn _partition_lomuto(input: &mut [i32], low: i32, high: i32) -> i32 {
+    let pivot = input[high as usize];
+    let mut i = low - 1;
+
+    for j in low..high {
+        if input[j as usize] <= pivot {
+            i += 1;
+            input.swap(i as usize, j as usize);
+        }
+    }
+    input.swap((i + 1) as usize, high as usize);
+
+    i
+}
+
 fn part(input: &mut Vec<i32>, low: usize, high: usize) -> usize {
     let pivot = input[low];
 
