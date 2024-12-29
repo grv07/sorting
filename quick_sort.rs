@@ -34,9 +34,10 @@ fn quick(input: &mut Vec<i32>, low: usize, high: usize) {
 }
 
 fn main() {
-    let mut input = vec![3, 2, 1, 4, 5, 1, 1, 2];
-    println!("Input:  {input:?}");
+    let mut _input = vec![3, 2, 1, 4, 5, 1, 1, 2];
+    let mut input = vec![12, 0, 4, 1, 2, 4, 5, 90, 67, 0, 15, 11, 10, 17];
+    let n = input.len();
 
-    quick(&mut input, 0, 7);
+    quick(&mut input, 0, n - 1);
     println!("Output: {input:?}");
 }
