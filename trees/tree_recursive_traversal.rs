@@ -104,6 +104,91 @@ fn post_order<T: std::fmt::Debug>(node: &Node<T>) {
     print!("{:?} ", node.value);
 }
 
+fn bfs<T: std::fmt::Debug>(node: &Node<T>) {
+    let mut q = std::collections::VecDeque::new();
+    q.push_back(node);
+
+    while let Some(node) = q.pop_front() {
+        print!("{:?} ", node.value);
+
+        if let Some(ref node) = node.left {
+            q.push_back(node);
+        }
+
+        if let Some(ref node) = node.right {
+            q.push_back(node);
+        }
+    }
+    println!();
+}
+
+fn pre_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
+    let mut s = vec![node];
+
+    while let Some(node) = s.pop() {
+        print!("{:?} ", node.value);
+
+        if let Some(ref node) = node.right {
+            s.push(node);
+        }
+
+        if let Some(ref node) = node.left {
+            s.push(node);
+        }
+    }
+
+    println!();
+}
+
+fn print_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
+    print!("Stack: ");
+    for i in v {
+        if i.is_none() {
+            print!(" None ");
+        } else {
+            print!(" {:?} ", i.unwrap().value);
+        }
+    }
+    println!();
+}
+
+fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
+    let mut s = vec![Some(node), Some(node)];
+
+    let mut cnt = 0;
+    while let Some(node) = s.pop() {
+        if node.is_none() {
+            cnt += 1;
+            if cnt > 10 {
+                break;
+            }
+            while let Some(Some(node)) = s.pop() {
+                // print_stack(&s);
+                print!("{:?} ", node.value);
+                if let Some(ref node) = node.right {
+                    // println!("Pushing the right");
+                    s.push(Some(node));
+                    // print_stack(&s);
+                }
+            }
+        }
+
+        let mut nn = node;
+        while let Some(ref n) = nn {
+            // if let Some(ref n) = nn {
+            cnt += 1;
+            if cnt > 10 {
+                break;
+            }
+
+            s.push(n.left.as_deref());
+            // println!("Pushing left {:?}", n.left);
+            nn = n.left.as_deref();
+            // print_stack(&s);
+        }
+    }
+}
+
 fn main() {
     let root: Node<i32> = create_tree(1);
     in_order(&root);
@@ -113,11 +198,24 @@ fn main() {
     post_order(&root);
 
     println!();
-
+    println!();
+    println!("In order: ");
     let root: Node<i32> = create_tree1(4);
     in_order(&root);
     println!();
+    in_order_iter(&root);
+
+    println!();
+    println!();
+    println!("Pre order: ");
     pre_order(&root);
     println!();
+    pre_order_iter(&root);
+    println!();
+
+    println!("Post order: ");
     post_order(&root);
+
+    println!();
+    bfs(&root);
 }
