@@ -140,7 +140,7 @@ fn pre_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     println!();
 }
 
-fn print_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
+fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     print!("Stack: ");
     for i in v {
         if i.is_none() {
@@ -148,6 +148,14 @@ fn print_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
         } else {
             print!(" {:?} ", i.unwrap().value);
         }
+    }
+    println!();
+}
+
+fn print_stack<T: std::fmt::Debug>(v: &Vec<&Node<T>>) {
+    print!("Stack: ");
+    for i in v {
+        print!("{:?} ", i.value);
     }
     println!();
 }
@@ -189,6 +197,29 @@ fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     }
 }
 
+fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
+    let mut q1 = vec![node];
+    let mut q2 = vec![node];
+
+    while let Some(item) = q2.pop() {
+        // q1.push(item);
+
+        if let Some(ref i) = item.right {
+            q2.push(i);
+            q1.push(i);
+        }
+
+        if let Some(ref i) = item.left {
+            q2.push(i);
+            q1.push(i);
+        }
+    }
+
+    q1.reverse();
+    print_stack(&q1);
+    // println!("{q1:?}");
+}
+
 fn main() {
     let root: Node<i32> = create_tree(1);
     in_order(&root);
@@ -215,7 +246,10 @@ fn main() {
 
     println!("Post order: ");
     post_order(&root);
+    println!();
+    post_order_iter(&root);
 
     println!();
+    println!("BFS: ");
     bfs(&root);
 }
