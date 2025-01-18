@@ -140,7 +140,7 @@ fn pre_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     println!();
 }
 
-fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
+fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     print!("Stack: ");
     for i in v {
         if i.is_none() {
@@ -220,6 +220,46 @@ fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     // println!("{q1:?}");
 }
 
+enum TT {
+    InOrder = 1,
+    PreOrder = 2,
+    PostOrder = 3,
+}
+
+fn all_in_one_travel<T: std::fmt::Display + std::fmt::Debug>(node: &Node<T>) {
+    let mut pre_ord = vec![];
+    let mut in_ord = vec![];
+    let mut post_ord = vec![];
+
+    let mut q = vec![(node, TT::PreOrder)];
+
+    while let Some((node, tt)) = q.pop() {
+        match tt {
+            TT::PreOrder => {
+                pre_ord.push(node);
+                q.push((node, TT::InOrder));
+                if let Some(ref n) = node.left {
+                    q.push((n, TT::PreOrder));
+                }
+            }
+            TT::InOrder => {
+                in_ord.push(node);
+                q.push((node, TT::PostOrder));
+                if let Some(ref n) = node.right {
+                    q.push((n, TT::PreOrder));
+                }
+            }
+            TT::PostOrder => {
+                post_ord.push(node);
+            }
+        }
+    }
+
+    print_stack(&pre_ord);
+    print_stack(&in_ord);
+    print_stack(&post_ord);
+}
+
 fn main() {
     let root: Node<i32> = create_tree(1);
     in_order(&root);
@@ -248,6 +288,9 @@ fn main() {
     post_order(&root);
     println!();
     post_order_iter(&root);
+
+    println!();
+    all_in_one_travel(&root);
 
     println!();
     println!("BFS: ");
