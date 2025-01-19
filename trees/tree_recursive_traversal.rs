@@ -2,106 +2,57 @@
 // POST-ORDER: Left-Right-Root
 // IN-ORDER: Left-Root-Right
 
-use std::default::Default;
+mod tree;
 
-#[derive(Default, Debug)]
-struct Node<T> {
-    left: Option<Box<Node<T>>>,
-    right: Option<Box<Node<T>>>,
-    value: T,
-}
+use std::collections::VecDeque;
+use tree::{create_tree, Node};
 
-impl<T: Default> Node<T> {
-    fn new(value: T, left: Option<Node<T>>, right: Option<Node<T>>) -> Self {
-        let mut node = Self {
-            value,
-            ..Default::default()
-        };
-        node.set_left(left);
-        node.set_right(right);
-
-        node
+fn in_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
+    if let Some(ref node) = node.left {
+        in_order_impl(node);
     }
 
-    fn set_left(&mut self, left: Option<Node<T>>) {
-        self.left = left.map(|left| Box::new(left));
-    }
+    print!("{:?} ", node.value);
 
-    fn set_right(&mut self, right: Option<Node<T>>) {
-        self.right = right.map(|right| Box::new(right));
+    if let Some(ref node) = node.right {
+        in_order_impl(node);
     }
 }
-
-fn create_tree(value: i32) -> Node<i32> {
-    let mut root: Node<i32> = Node::new(value, None, None);
-
-    root.set_left(Some(Node::new(
-        2,
-        Some(Node::new(4, None, None)),
-        Some(Node::new(5, Some(Node::new(6, None, None)), None)),
-    )));
-
-    root.set_right(Some(Node::new(
-        3,
-        Some(Node::new(7, None, None)),
-        Some(Node::new(
-            8,
-            Some(Node::new(9, None, None)),
-            Some(Node::new(10, None, None)),
-        )),
-    )));
-
-    root
-}
-
-fn create_tree1(value: i32) -> Node<i32> {
-    let mut root: Node<i32> = Node::new(value, None, None);
-
-    root.set_left(Some(Node::new(
-        2,
-        Some(Node::new(1, None, None)),
-        Some(Node::new(3, None, None)),
-    )));
-
-    root.set_right(Some(Node::new(5, None, None)));
-
-    root
-}
-
 fn in_order<T: std::fmt::Debug>(node: &Node<T>) {
-    if let Some(ref node) = node.left {
-        in_order(node);
-    }
-
-    print!("{:?} ", node.value);
-
-    if let Some(ref node) = node.right {
-        in_order(node);
-    }
+    in_order_impl(node);
+    println!();
 }
 
+fn pre_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
+    print!("{:?} ", node.value);
+
+    if let Some(ref node) = node.left {
+        pre_order_impl(node);
+    }
+
+    if let Some(ref node) = node.right {
+        pre_order_impl(node);
+    }
+}
 fn pre_order<T: std::fmt::Debug>(node: &Node<T>) {
-    print!("{:?} ", node.value);
-
-    if let Some(ref node) = node.left {
-        pre_order(node);
-    }
-
-    if let Some(ref node) = node.right {
-        pre_order(node);
-    }
+    pre_order_impl(node);
+    println!();
 }
 
-fn post_order<T: std::fmt::Debug>(node: &Node<T>) {
+fn post_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
     if let Some(ref node) = node.left {
-        post_order(node);
+        post_order_impl(node);
     }
 
     if let Some(ref node) = node.right {
-        post_order(node);
+        post_order_impl(node);
     }
 
     print!("{:?} ", node.value);
+}
+fn post_order<T: std::fmt::Debug>(node: &Node<T>) {
+    post_order_impl(node);
+    println!();
 }
 
 fn bfs<T: std::fmt::Debug>(node: &Node<T>) {
@@ -140,7 +91,7 @@ fn pre_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     println!();
 }
 
-fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
+fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     print!("Stack: ");
     for i in v {
         if i.is_none() {
@@ -152,8 +103,8 @@ fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     println!();
 }
 
-fn print_stack<T: std::fmt::Debug>(v: &Vec<&Node<T>>) {
-    print!("Stack: ");
+fn print_stack<'a, T: std::fmt::Debug + 'a, K: IntoIterator<Item = &'a Node<T>>>(v: K) {
+    // print!("Stack: ");
     for i in v {
         print!("{:?} ", i.value);
     }
@@ -163,38 +114,28 @@ fn print_stack<T: std::fmt::Debug>(v: &Vec<&Node<T>>) {
 fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     let mut s = vec![Some(node), Some(node)];
 
-    let mut cnt = 0;
     while let Some(node) = s.pop() {
         if node.is_none() {
-            cnt += 1;
-            if cnt > 10 {
-                break;
-            }
-            while let Some(Some(node)) = s.pop() {
-                // print_stack(&s);
-                print!("{:?} ", node.value);
+            if let Some(Some(node)) = s.pop() {
+                print!("pop after getting none {:?} ", node.value);
+                print_options_stack(&s);
                 if let Some(ref node) = node.right {
-                    // println!("Pushing the right");
+                    println!("Pushing the right: ");
                     s.push(Some(node));
-                    // print_stack(&s);
+                    print_options_stack(&s);
                 }
             }
-        }
-
-        let mut nn = node;
-        while let Some(ref n) = nn {
-            // if let Some(ref n) = nn {
-            cnt += 1;
-            if cnt > 10 {
-                break;
+        } else {
+            let mut nn = node;
+            while let Some(ref n) = nn {
+                s.push(n.left.as_deref());
+                println!("Pushing left");
+                nn = n.left.as_deref();
+                print_options_stack(&s);
             }
-
-            s.push(n.left.as_deref());
-            // println!("Pushing left {:?}", n.left);
-            nn = n.left.as_deref();
-            // print_stack(&s);
         }
     }
+    println!();
 }
 
 fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
@@ -216,7 +157,7 @@ fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     }
 
     q1.reverse();
-    print_stack(&q1);
+    print_stack(q1);
     // println!("{q1:?}");
 }
 
@@ -255,44 +196,60 @@ fn all_in_one_travel<T: std::fmt::Display + std::fmt::Debug>(node: &Node<T>) {
         }
     }
 
-    print_stack(&pre_ord);
-    print_stack(&in_ord);
-    print_stack(&post_ord);
+    print!("Pre  ");
+    print_stack(pre_ord);
+    print!("Post ");
+    print_stack(post_ord);
+    print!("In   ");
+    print_stack(in_ord);
+}
+
+fn find_maximum_depth<T: std::fmt::Debug>(node: &Node<T>) -> i32 {
+    let mut q = VecDeque::new();
+    q.push_back(node);
+
+    let mut cnt = 0;
+    while !q.is_empty() {
+        for _ in 0..q.len() {
+            if let Some(node) = q.pop_front() {
+                if let Some(ref right) = node.right {
+                    q.push_back(right);
+                }
+                if let Some(ref left) = node.left {
+                    q.push_back(left);
+                }
+            }
+        }
+        cnt += 1;
+    }
+    cnt
 }
 
 fn main() {
     let root: Node<i32> = create_tree(1);
+    println!("In order");
+    print!("REC ");
     in_order(&root);
-    println!();
-    pre_order(&root);
-    println!();
-    post_order(&root);
-
-    println!();
-    println!();
-    println!("In order: ");
-    let root: Node<i32> = create_tree1(4);
-    in_order(&root);
-    println!();
+    print!("ITR ");
     in_order_iter(&root);
 
-    println!();
-    println!();
-    println!("Pre order: ");
+    println!("\nPre order ");
+    print!("REC ");
     pre_order(&root);
-    println!();
+    print!("ITR ");
     pre_order_iter(&root);
-    println!();
 
-    println!("Post order: ");
+    println!("\nPost order: ");
+    print!("REC ");
     post_order(&root);
-    println!();
+    print!("ITR ");
     post_order_iter(&root);
 
-    println!();
+    let root: Node<i32> = create_tree(1);
+    println!("\nMax depth is: {}", find_maximum_depth(&root));
+
     all_in_one_travel(&root);
 
-    println!();
     println!("BFS: ");
     bfs(&root);
 }
