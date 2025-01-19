@@ -2,26 +2,12 @@
 // POST-ORDER: Left-Right-Root
 // IN-ORDER: Left-Root-Right
 
+mod inorder;
 mod tree;
 
+use inorder::{in_order, in_order_iter, print_stack};
 use std::collections::VecDeque;
 use tree::{create_tree, Node};
-
-fn in_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
-    if let Some(ref node) = node.left {
-        in_order_impl(node);
-    }
-
-    print!("{:?} ", node.value);
-
-    if let Some(ref node) = node.right {
-        in_order_impl(node);
-    }
-}
-fn in_order<T: std::fmt::Debug>(node: &Node<T>) {
-    in_order_impl(node);
-    println!();
-}
 
 fn pre_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
     print!("{:?} ", node.value);
@@ -98,39 +84,6 @@ fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
             print!(" None ");
         } else {
             print!(" {:?} ", i.unwrap().value);
-        }
-    }
-    println!();
-}
-
-fn print_stack<'a, T: std::fmt::Debug + 'a, K: IntoIterator<Item = &'a Node<T>>>(v: K) {
-    // print!("Stack: ");
-    for i in v {
-        print!("{:?} ", i.value);
-    }
-    println!();
-}
-
-fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
-    let mut s = vec![Some(node), Some(node)];
-
-    while let Some(node) = s.pop() {
-        if node.is_none() {
-            while let Some(Some(node)) = s.pop() {
-                print!("{:?} ", node.value);
-                if let Some(ref node) = node.right {
-                    // println!("Pushing the right: ");
-                    s.push(Some(node));
-                    s.push(Some(node));
-                    // print_options_stack(&s);
-                    break;
-                }
-            }
-        }
-        let mut nn = node;
-        while let Some(ref n) = nn {
-            s.push(n.left.as_deref());
-            nn = n.left.as_deref();
         }
     }
     println!();
@@ -240,11 +193,10 @@ fn main() {
     print!("ITR ");
     post_order_iter(&root);
 
-    // let root: Node<i32> = create_tree(1);
-    // println!("\nMax depth is: {}", find_maximum_depth(&root));
+    println!("\nMax depth is: {}", find_maximum_depth(&root));
 
-    // all_in_one_travel(&root);
+    all_in_one_travel(&root);
 
-    // println!("BFS: ");
-    // bfs(&root);
+    println!("\nBFS: ");
+    bfs(&root);
 }
