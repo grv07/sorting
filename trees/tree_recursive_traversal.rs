@@ -116,49 +116,44 @@ fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
 
     while let Some(node) = s.pop() {
         if node.is_none() {
-            if let Some(Some(node)) = s.pop() {
-                print!("pop after getting none {:?} ", node.value);
-                print_options_stack(&s);
+            while let Some(Some(node)) = s.pop() {
+                print!("{:?} ", node.value);
                 if let Some(ref node) = node.right {
-                    println!("Pushing the right: ");
+                    // println!("Pushing the right: ");
                     s.push(Some(node));
-                    print_options_stack(&s);
+                    s.push(Some(node));
+                    // print_options_stack(&s);
+                    break;
                 }
             }
-        } else {
-            let mut nn = node;
-            while let Some(ref n) = nn {
-                s.push(n.left.as_deref());
-                println!("Pushing left");
-                nn = n.left.as_deref();
-                print_options_stack(&s);
-            }
+        }
+        let mut nn = node;
+        while let Some(ref n) = nn {
+            s.push(n.left.as_deref());
+            nn = n.left.as_deref();
         }
     }
     println!();
 }
 
 fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
-    let mut q1 = vec![node];
+    let mut q1 = vec![];
     let mut q2 = vec![node];
 
     while let Some(item) = q2.pop() {
-        // q1.push(item);
-
-        if let Some(ref i) = item.right {
-            q2.push(i);
-            q1.push(i);
-        }
+        q1.push(item);
 
         if let Some(ref i) = item.left {
             q2.push(i);
-            q1.push(i);
+        }
+
+        if let Some(ref i) = item.right {
+            q2.push(i);
         }
     }
 
     q1.reverse();
     print_stack(q1);
-    // println!("{q1:?}");
 }
 
 enum TT {
@@ -245,11 +240,11 @@ fn main() {
     print!("ITR ");
     post_order_iter(&root);
 
-    let root: Node<i32> = create_tree(1);
-    println!("\nMax depth is: {}", find_maximum_depth(&root));
+    // let root: Node<i32> = create_tree(1);
+    // println!("\nMax depth is: {}", find_maximum_depth(&root));
 
-    all_in_one_travel(&root);
+    // all_in_one_travel(&root);
 
-    println!("BFS: ");
-    bfs(&root);
+    // println!("BFS: ");
+    // bfs(&root);
 }
