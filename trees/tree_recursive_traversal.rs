@@ -3,9 +3,11 @@
 // IN-ORDER: Left-Root-Right
 
 mod inorder;
+mod is_tree_balanced;
 mod tree;
 
 use inorder::{in_order, in_order_iter, print_stack};
+use is_tree_balanced::is_balance;
 use std::collections::VecDeque;
 use tree::{create_tree, Node};
 
@@ -199,4 +201,10 @@ fn main() {
 
     println!("\nBFS: ");
     bfs(&root);
+
+    if is_balance(&root) == -1 {
+        println!("Tree is not a balanced tree");
+    } else {
+        println!("Tree is a balanced tree");
+    }
 }
