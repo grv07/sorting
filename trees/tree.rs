@@ -34,7 +34,11 @@ pub fn create_tree(value: i32) -> Node<i32> {
     root.set_left(Some(Node::new(
         2,
         Some(Node::new(4, None, None)),
-        Some(Node::new(5, Some(Node::new(6, None, None)), None)),
+        Some(Node::new(
+            5,
+            Some(Node::new(6, None, Some(Node::new(11, None, None)))),
+            None,
+        )),
     )));
 
     root.set_right(Some(Node::new(

@@ -2,10 +2,12 @@
 // POST-ORDER: Left-Right-Root
 // IN-ORDER: Left-Root-Right
 
+mod diameter;
 mod inorder;
 mod is_tree_balanced;
 mod tree;
 
+use diameter::diameter;
 use inorder::{in_order, in_order_iter, print_stack};
 use is_tree_balanced::is_balance;
 use std::collections::VecDeque;
@@ -177,6 +179,7 @@ fn find_maximum_depth<T: std::fmt::Debug>(node: &Node<T>) -> i32 {
 
 fn main() {
     let root: Node<i32> = create_tree(1);
+
     println!("In order");
     print!("REC ");
     in_order(&root);
@@ -207,4 +210,53 @@ fn main() {
     } else {
         println!("Tree is a balanced tree");
     }
+
+    let root = binary_tree!(
+        1,
+        binary_tree!(2, left: binary_tree!(10, left: binary_tree!(11))),
+        binary_tree!(
+            3,
+            binary_tree!(4, left: binary_tree!(5, left: binary_tree!(6))),
+            binary_tree!(7, left: binary_tree!(8, left: binary_tree!(9)))
+        )
+    );
+
+    let mut res = 0;
+    diameter(&root, &mut res);
+    println!("{res}");
+}
+
+#[macro_export]
+macro_rules! binary_tree {
+    // Base case: Leaf Node with no children
+    ($value:expr) => {
+        Node::new($value, None, None)
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, $left: expr, $right: expr) => {
+        Node {
+            value: $value,
+            left: Some(Box::new($left)),
+            right: Some(Box::new($right)),
+        }
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, left: $left:expr) => {
+        Node {
+            value: $value,
+            left: Some(Box::new($left)),
+            right: None,
+        }
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, right: $right:expr) => {
+        Node {
+            value: $value,
+            left: None,
+            right: Some(Box::new($right)),
+        }
+    };
 }
