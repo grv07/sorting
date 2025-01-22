@@ -7,6 +7,7 @@ mod diameter;
 mod inorder;
 mod is_tree_balanced;
 mod max_depth_tree;
+mod max_path;
 mod post_order;
 mod pre_order;
 mod tree;
@@ -17,6 +18,7 @@ use diameter::diameter;
 use inorder::{in_order, in_order_iter};
 use is_tree_balanced::is_balance;
 use max_depth_tree::find_maximum_depth;
+use max_path::max_path;
 use post_order::{post_order, post_order_iter};
 use pre_order::{pre_order, pre_order_iter};
 use tree::{create_tree, Node};
@@ -36,6 +38,10 @@ fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
 
 fn main() {
     let root: Node<i32> = create_tree(1);
+
+    let mut res = 0;
+    max_path(&root, &mut res);
+    println!("Result: {res}");
 
     println!("In order");
     print!("REC ");
