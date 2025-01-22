@@ -15,5 +15,5 @@ pub fn max_path<T: Into<i32> + Copy>(node: &Node<T>, maxi: &mut i32) -> i32 {
 
     *maxi = *maxi.max(&mut (left + right + node.value.into()));
 
-    left.max(right) + node.value.into()
+    node.value.into().max(left.max(right) + node.value.into())
 }
