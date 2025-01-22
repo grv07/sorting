@@ -17,13 +17,6 @@ pub fn in_order<T: std::fmt::Debug>(node: &Node<T>) {
     println!();
 }
 
-pub fn print_stack<'a, T: std::fmt::Debug + 'a, K: IntoIterator<Item = &'a Node<T>>>(v: K) {
-    for i in v {
-        print!("{:?} ", i.value);
-    }
-    println!();
-}
-
 pub fn in_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
     let mut s = vec![Some(node), Some(node)];
 

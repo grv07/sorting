@@ -2,86 +2,27 @@
 // POST-ORDER: Left-Right-Root
 // IN-ORDER: Left-Root-Right
 
+mod all_traversal_in_one;
 mod diameter;
 mod inorder;
 mod is_tree_balanced;
+mod max_depth_tree;
+mod post_order;
+mod pre_order;
 mod tree;
+mod tree_bfs;
 
+use all_traversal_in_one::all_in_one_travel;
 use diameter::diameter;
-use inorder::{in_order, in_order_iter, print_stack};
+use inorder::{in_order, in_order_iter};
 use is_tree_balanced::is_balance;
-use std::collections::VecDeque;
+use max_depth_tree::find_maximum_depth;
+use post_order::{post_order, post_order_iter};
+use pre_order::{pre_order, pre_order_iter};
 use tree::{create_tree, Node};
+use tree_bfs::bfs;
 
-fn pre_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
-    print!("{:?} ", node.value);
-
-    if let Some(ref node) = node.left {
-        pre_order_impl(node);
-    }
-
-    if let Some(ref node) = node.right {
-        pre_order_impl(node);
-    }
-}
-fn pre_order<T: std::fmt::Debug>(node: &Node<T>) {
-    pre_order_impl(node);
-    println!();
-}
-
-fn post_order_impl<T: std::fmt::Debug>(node: &Node<T>) {
-    if let Some(ref node) = node.left {
-        post_order_impl(node);
-    }
-
-    if let Some(ref node) = node.right {
-        post_order_impl(node);
-    }
-
-    print!("{:?} ", node.value);
-}
-fn post_order<T: std::fmt::Debug>(node: &Node<T>) {
-    post_order_impl(node);
-    println!();
-}
-
-fn bfs<T: std::fmt::Debug>(node: &Node<T>) {
-    let mut q = std::collections::VecDeque::new();
-    q.push_back(node);
-
-    while let Some(node) = q.pop_front() {
-        print!("{:?} ", node.value);
-
-        if let Some(ref node) = node.left {
-            q.push_back(node);
-        }
-
-        if let Some(ref node) = node.right {
-            q.push_back(node);
-        }
-    }
-    println!();
-}
-
-fn pre_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
-    let mut s = vec![node];
-
-    while let Some(node) = s.pop() {
-        print!("{:?} ", node.value);
-
-        if let Some(ref node) = node.right {
-            s.push(node);
-        }
-
-        if let Some(ref node) = node.left {
-            s.push(node);
-        }
-    }
-
-    println!();
-}
-
-fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
+fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     print!("Stack: ");
     for i in v {
         if i.is_none() {
@@ -91,90 +32,6 @@ fn print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
         }
     }
     println!();
-}
-
-fn post_order_iter<T: std::fmt::Debug>(node: &Node<T>) {
-    let mut q1 = vec![];
-    let mut q2 = vec![node];
-
-    while let Some(item) = q2.pop() {
-        q1.push(item);
-
-        if let Some(ref i) = item.left {
-            q2.push(i);
-        }
-
-        if let Some(ref i) = item.right {
-            q2.push(i);
-        }
-    }
-
-    q1.reverse();
-    print_stack(q1);
-}
-
-enum TT {
-    InOrder = 1,
-    PreOrder = 2,
-    PostOrder = 3,
-}
-
-fn all_in_one_travel<T: std::fmt::Display + std::fmt::Debug>(node: &Node<T>) {
-    let mut pre_ord = vec![];
-    let mut in_ord = vec![];
-    let mut post_ord = vec![];
-
-    let mut q = vec![(node, TT::PreOrder)];
-
-    while let Some((node, tt)) = q.pop() {
-        match tt {
-            TT::PreOrder => {
-                pre_ord.push(node);
-                q.push((node, TT::InOrder));
-                if let Some(ref n) = node.left {
-                    q.push((n, TT::PreOrder));
-                }
-            }
-            TT::InOrder => {
-                in_ord.push(node);
-                q.push((node, TT::PostOrder));
-                if let Some(ref n) = node.right {
-                    q.push((n, TT::PreOrder));
-                }
-            }
-            TT::PostOrder => {
-                post_ord.push(node);
-            }
-        }
-    }
-
-    print!("Pre  ");
-    print_stack(pre_ord);
-    print!("Post ");
-    print_stack(post_ord);
-    print!("In   ");
-    print_stack(in_ord);
-}
-
-fn find_maximum_depth<T: std::fmt::Debug>(node: &Node<T>) -> i32 {
-    let mut q = VecDeque::new();
-    q.push_back(node);
-
-    let mut cnt = 0;
-    while !q.is_empty() {
-        for _ in 0..q.len() {
-            if let Some(node) = q.pop_front() {
-                if let Some(ref right) = node.right {
-                    q.push_back(right);
-                }
-                if let Some(ref left) = node.left {
-                    q.push_back(left);
-                }
-            }
-        }
-        cnt += 1;
-    }
-    cnt
 }
 
 fn main() {

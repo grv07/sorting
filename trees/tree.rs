@@ -28,6 +28,13 @@ impl<T: Default> Node<T> {
     }
 }
 
+pub fn print_stack<'a, T: std::fmt::Debug + 'a, K: IntoIterator<Item = &'a Node<T>>>(v: K) {
+    for i in v {
+        print!("{:?} ", i.value);
+    }
+    println!();
+}
+
 pub fn create_tree(value: i32) -> Node<i32> {
     let mut root: Node<i32> = Node::new(value, None, None);
 
