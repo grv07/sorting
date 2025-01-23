@@ -1,6 +1,6 @@
 use std::default::Default;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub struct Node<T> {
     pub left: Option<Box<Node<T>>>,
     pub right: Option<Box<Node<T>>>,
@@ -60,17 +60,3 @@ pub fn create_tree(value: i32) -> Node<i32> {
 
     root
 }
-
-// fn create_tree1(value: i32) -> Node<i32> {
-//     let mut root: Node<i32> = Node::new(value, None, None);
-
-//     root.set_left(Some(Node::new(
-//         2,
-//         Some(Node::new(1, None, None)),
-//         Some(Node::new(3, None, None)),
-//     )));
-
-//     root.set_right(Some(Node::new(5, None, None)));
-
-//     root
-// }
