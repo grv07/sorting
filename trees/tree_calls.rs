@@ -4,6 +4,7 @@
 
 mod all_traversal_in_one;
 mod diameter;
+mod identical_tree;
 mod inorder;
 mod is_tree_balanced;
 mod max_depth_tree;
@@ -15,6 +16,7 @@ mod tree_bfs;
 
 use all_traversal_in_one::all_in_one_travel;
 use diameter::diameter;
+use identical_tree::is_identical;
 use inorder::{in_order, in_order_iter};
 use is_tree_balanced::is_balance;
 use max_depth_tree::find_maximum_depth;
@@ -36,7 +38,24 @@ fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     println!();
 }
 
+fn check_identical() {
+    let root = binary_tree!(
+        15,
+        left: binary_tree!(10, left: binary_tree!(20, binary_tree!(-30), binary_tree!(-15)))
+    );
+
+    let root1 = binary_tree!(
+        15,
+        left: binary_tree!(10, left: binary_tree!(20, binary_tree!(-30), binary_tree!(-15)))
+    );
+
+    let res = is_identical(&root, &root1);
+    println!("Is identical: {res} \n");
+}
+
 fn main() {
+    check_identical();
+
     let root = binary_tree!(
         15,
         left: binary_tree!(10, left: binary_tree!(20, binary_tree!(-30), binary_tree!(-15)))
@@ -44,7 +63,7 @@ fn main() {
 
     let mut res = 0;
     max_path(&root, &mut res);
-    println!("Result: {res} \n");
+    println!("Max path in tree between teo nodes: {res} \n");
 
     let root: Node<i32> = create_tree(1);
 
@@ -74,9 +93,9 @@ fn main() {
     bfs(&root);
 
     if is_balance(&root) == -1 {
-        println!("Tree is not a balanced tree");
+        println!("Tree is not a balanced tree\n");
     } else {
-        println!("Tree is a balanced tree");
+        println!("Tree is a balanced tree\n");
     }
 
     let root = binary_tree!(

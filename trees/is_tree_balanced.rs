@@ -21,7 +21,7 @@ pub fn is_balance<T: std::fmt::Debug + std::fmt::Display>(node: &Node<T>) -> i32
         return -1;
     }
 
-    println!("{left} {right} for node {}", node.value);
+    // println!("{left} {right} for node {}", node.value);
 
     if (left - right).abs() > 1 {
         return -1;
