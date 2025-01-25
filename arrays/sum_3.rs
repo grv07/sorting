@@ -48,10 +48,10 @@ fn optimal(a: &[i32], t: i32) {
                 j += 1;
                 k -= 1;
 
-                while a[j] == a[j - 1] {
+                while j < k && a[j] == a[j - 1] {
                     j += 1;
                 }
-                while a[k] == a[k + 1] {
+                while j < k && a[k] == a[k + 1] {
                     k -= 1;
                 }
             }
