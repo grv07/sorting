@@ -16,15 +16,43 @@ fn bf(a: &[Range]) -> Vec<Range> {
     let mut res = vec![];
     let n = a.len();
 
+    let mut c = 0;
+
+    for i in 0..n {
+        if !res.is_empty() && i <= c {
+            continue;
+        }
+
+        let mut temp = a[i];
+
+        for j in i + 1..n {
+            temp = if let Some(r) = merge(temp, a[j]) {
+                c = j;
+                r
+            } else {
+                c = j - 1;
+                break;
+            };
+        }
+
+        res.push(temp);
+    }
+
+    res
+}
+
+fn optimal(a: &[Range]) -> Vec<Range> {
+    let mut res = vec![];
+    let n = a.len();
+
     let mut i = 0;
-    let mut j = 0;
+    let mut j = 1;
     let mut temp = a[i];
     while i <= j && j < n {
         temp = if let Some(r) = merge(temp, a[j]) {
             r
         } else {
             res.push(temp);
-
             i = j;
             a[j]
         };
@@ -37,19 +65,25 @@ fn bf(a: &[Range]) -> Vec<Range> {
 }
 
 fn solve() {
-    let a = &[
+    let a = &mut [
         (1, 3),
+        (1, 4),
         (2, 6),
         (8, 9),
         (9, 11),
         (8, 10),
-        (2, 4),
+        (2, 14),
         (15, 18),
         (16, 17),
+        (-1, -2),
+        (100, 109),
     ];
 
-    let res = bf(a);
+    a.sort();
     println!("{a:?}");
+    let res = bf(a);
+    println!("{res:?}");
+    let res = optimal(a);
     println!("{res:?}");
 }
 
