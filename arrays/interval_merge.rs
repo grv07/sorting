@@ -81,8 +81,10 @@ fn solve() {
 
     a.sort();
     println!("{a:?}");
+
     let res = bf(a);
     println!("{res:?}");
+
     let res = optimal(a);
     println!("{res:?}");
 }
