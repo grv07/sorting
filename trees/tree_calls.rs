@@ -3,6 +3,7 @@
 // IN-ORDER: Left-Root-Right
 
 mod all_traversal_in_one;
+mod boundry_trv;
 mod diameter;
 mod identical_tree;
 mod inorder;
@@ -16,6 +17,7 @@ mod tree_bfs;
 mod zig_zag_trv;
 
 use all_traversal_in_one::all_in_one_travel;
+use boundry_trv::trv_boundry;
 use diameter::diameter;
 use identical_tree::is_identical;
 use inorder::{in_order, in_order_iter};
@@ -120,6 +122,10 @@ fn main() {
 
     let mut res = vec![];
     s_trv(&root, &mut res);
+    println!("{res:?}");
+
+    let mut res = vec![vec![]; 3];
+    trv_boundry(&root, &mut res);
     println!("{res:?}");
 }
 
