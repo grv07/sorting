@@ -13,6 +13,7 @@ mod post_order;
 mod pre_order;
 mod tree;
 mod tree_bfs;
+mod zig_zag_trv;
 
 use all_traversal_in_one::all_in_one_travel;
 use diameter::diameter;
@@ -25,6 +26,7 @@ use post_order::{post_order, post_order_iter};
 use pre_order::{pre_order, pre_order_iter};
 use tree::{create_tree, Node};
 use tree_bfs::bfs;
+use zig_zag_trv::{r_trv, s_trv};
 
 fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
     print!("Stack: ");
@@ -111,6 +113,14 @@ fn main() {
     let mut res = 0;
     diameter(&root, &mut res);
     println!("{res}");
+
+    let mut res = vec![];
+    r_trv(&root, &mut res, 0);
+    println!("{res:?}");
+
+    let mut res = vec![];
+    s_trv(&root, &mut res);
+    println!("{res:?}");
 }
 
 #[macro_export]
