@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 mod tree;
 mod tree_bfs;
+mod vertical_trv;
 mod zig_zag_trv;
 
 use all_traversal_in_one::all_in_one_travel;
@@ -28,6 +29,7 @@ use post_order::{post_order, post_order_iter};
 use pre_order::{pre_order, pre_order_iter};
 use tree::{create_tree, Node};
 use tree_bfs::bfs;
+use vertical_trv::vertical_trv;
 use zig_zag_trv::{r_trv, s_trv};
 
 fn _print_options_stack<T: std::fmt::Debug>(v: &Vec<Option<&Node<T>>>) {
@@ -126,6 +128,11 @@ fn main() {
 
     let mut res = vec![vec![]; 3];
     trv_boundry(&root, &mut res);
+    println!("{res:?}");
+
+    let mut res = vec![vec![]; 2];
+    vertical_trv(&root, &mut res);
+    res[0].reverse();
     println!("{res:?}");
 }
 
