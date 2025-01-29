@@ -43,16 +43,27 @@ fn optimal(a: &mut [i32]) {
 fn solve() {
     let a = &[1, 2, 4, 3, 5, 1];
     bf(a);
+    println!();
 
     let a = &[3, 2, 4, 1, 5, 3];
     bf(a);
+    println!();
 
     let a = &mut [1, 3, 6, 4, 1, 5, 2];
     bf(a);
     better(a);
     optimal(a);
+    println!();
+
+    let a = &mut [1, 3, 4, 2, 2];
+    bf(a);
+    better(a);
+    optimal(a);
+    println!();
 
     let a = &mut [3, 4, 4, 1, 5, 2];
+    bf(a);
+    better(a);
     optimal(a);
 }
 
