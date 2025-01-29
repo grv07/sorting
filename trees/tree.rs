@@ -60,3 +60,38 @@ pub fn create_tree(value: i32) -> Node<i32> {
 
     root
 }
+
+#[macro_export]
+macro_rules! binary_tree {
+    // Base case: Leaf Node with no children
+    ($value:expr) => {
+        Node::new($value, None, None)
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, $left: expr, $right: expr) => {
+        Node {
+            value: $value,
+            left: Some(Box::new($left)),
+            right: Some(Box::new($right)),
+        }
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, left: $left:expr) => {
+        Node {
+            value: $value,
+            left: Some(Box::new($left)),
+            right: None,
+        }
+    };
+
+    // Recurssive Case: Node with children.
+    ($value: expr, right: $right:expr) => {
+        Node {
+            value: $value,
+            left: None,
+            right: Some(Box::new($right)),
+        }
+    };
+}

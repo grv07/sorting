@@ -12,6 +12,7 @@ mod max_depth_tree;
 mod max_path;
 mod post_order;
 mod pre_order;
+#[macro_use]
 mod tree;
 mod tree_bfs;
 mod vertical_trv;
@@ -27,7 +28,7 @@ use max_depth_tree::find_maximum_depth;
 use max_path::max_path;
 use post_order::{post_order, post_order_iter};
 use pre_order::{pre_order, pre_order_iter};
-use tree::{create_tree, Node};
+pub use tree::{create_tree, Node};
 use tree_bfs::bfs;
 use vertical_trv::vertical_trv;
 use zig_zag_trv::{r_trv, s_trv};
@@ -130,43 +131,18 @@ fn main() {
     trv_boundry(&root, &mut res);
     println!("{res:?}");
 
+    let root = binary_tree!(
+        1,
+        binary_tree!(
+            2,
+            binary_tree!(4, right: binary_tree!(5, right: binary_tree!(6))),
+            binary_tree!(7)
+        ),
+        binary_tree!(3, binary_tree!(9), binary_tree!(10))
+    );
+
     let mut res = vec![vec![]; 2];
     vertical_trv(&root, &mut res);
     res[0].reverse();
     println!("{res:?}");
-}
-
-#[macro_export]
-macro_rules! binary_tree {
-    // Base case: Leaf Node with no children
-    ($value:expr) => {
-        Node::new($value, None, None)
-    };
-
-    // Recurssive Case: Node with children.
-    ($value: expr, $left: expr, $right: expr) => {
-        Node {
-            value: $value,
-            left: Some(Box::new($left)),
-            right: Some(Box::new($right)),
-        }
-    };
-
-    // Recurssive Case: Node with children.
-    ($value: expr, left: $left:expr) => {
-        Node {
-            value: $value,
-            left: Some(Box::new($left)),
-            right: None,
-        }
-    };
-
-    // Recurssive Case: Node with children.
-    ($value: expr, right: $right:expr) => {
-        Node {
-            value: $value,
-            left: None,
-            right: Some(Box::new($right)),
-        }
-    };
 }
