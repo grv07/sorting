@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod symmetrical_bst;
 mod tree_bfs;
 mod vertical_trv;
 mod zig_zag_trv;
@@ -145,4 +146,6 @@ fn main() {
     vertical_trv(&root, &mut res);
     res[0].reverse();
     println!("{res:?}");
+
+    symmetrical_bst::solve();
 }
