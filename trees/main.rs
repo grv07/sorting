@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod root_to_node_path;
 mod symmetrical_bst;
 mod tree_bfs;
 mod vertical_trv;
@@ -148,4 +149,6 @@ fn main() {
     println!("{res:?}");
 
     symmetrical_bst::solve();
+
+    root_to_node_path::solve();
 }

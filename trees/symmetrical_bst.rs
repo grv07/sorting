@@ -1,3 +1,4 @@
+#[allow(unused_imports)]
 use tree::{print_stack, Node};
 
 fn is_symmetrical<T: std::cmp::PartialOrd>(root: &Node<T>) -> bool
