@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod lca;
 mod root_to_node_path;
 mod symmetrical_bst;
 mod tree_bfs;
@@ -151,4 +152,5 @@ fn main() {
     symmetrical_bst::solve();
 
     root_to_node_path::solve();
+    lca::solve();
 }
