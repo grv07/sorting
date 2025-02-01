@@ -3,6 +3,7 @@ use tree::Node;
 enum NType<'a, T: Copy> {
     Left(&'a Node<T>),
     Right(&'a Node<T>),
+    #[allow(dead_code)]
     Leaf(&'a Node<T>),
 }
 
