@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod k_distance_nodes;
 mod lca;
 mod root_to_node_path;
 mod symmetrical_bst;
@@ -27,6 +28,7 @@ use diameter::diameter;
 use identical_tree::is_identical;
 use inorder::{in_order, in_order_iter};
 use is_tree_balanced::is_balance;
+// use k_distance_node;
 use max_depth_tree::find_maximum_depth;
 use max_path::max_path;
 use post_order::{post_order, post_order_iter};
@@ -153,4 +155,6 @@ fn main() {
 
     root_to_node_path::solve();
     lca::solve();
+
+    k_distance_nodes::solve();
 }
