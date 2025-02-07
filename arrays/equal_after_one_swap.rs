@@ -55,7 +55,7 @@ fn solve_clean(a: &str, b: &str) -> bool {
     }
 
     if let (Some(i), Some(j)) = (res.pop(), res.pop()) {
-        if a[i] == b[j] {
+        if a[i] == b[j] && b[i] == a[j] {
             return true;
         }
     }
