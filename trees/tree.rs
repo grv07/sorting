@@ -1,6 +1,6 @@
 use std::default::Default;
 
-#[derive(Default, Debug, PartialEq)]
+#[derive(Default, Debug, PartialEq, Clone, Eq, Hash)]
 pub struct Node<T> {
     pub left: Option<Box<Node<T>>>,
     pub right: Option<Box<Node<T>>>,
