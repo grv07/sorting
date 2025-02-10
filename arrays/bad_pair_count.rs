@@ -1,7 +1,8 @@
+// A pair is bad if i > j && j-i != a[j]-a[i]
+// So, to solve this we find all the good pair and minus all the pairs
+// think them (i, a[i]), (j, a[j]) as a slop in graph
+
 use std::collections::HashMap;
-// a pair is bad if i > j && j-i != a[j]-a[i]
-// so to solve this we find all the good pair and minus all the pairs
-// think them (i, a[i]), (j, a[j]) as slop in graph
 
 fn solve(a: &[i32]) -> i32 {
     let mut g_p = 0;
