@@ -1,6 +1,6 @@
-// inp = [1,2,3,1,12,0,9,8,7]
-// We need to find the next grtr element in circular array
-// sol: [2,3,12,12,-1,9,12,9,8]
+// Inp = [1, 2, 3, 1, 12, 0, 9, 8, 7]
+// We need to find the next grtr element in circular array.
+// Sol = [2, 3, 12, 12, -1, 9, 12, 9, 8]
 
 // I solve it with two loops for first one we keep the monotonic stack
 // second one will use this and keep the result.
