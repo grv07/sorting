@@ -32,7 +32,7 @@ fn solve(a: &[i32]) -> Vec<i32> {
         while let Some(l) = s.last() {
             if m != get_move(*l) {
                 let current = a[i].abs();
-                let mut last = l.abs();
+                let last = l.abs();
                 // println!(" >> {} {} {s:?}", a[i], l);
 
                 if last == current {
@@ -59,5 +59,8 @@ fn solve(a: &[i32]) -> Vec<i32> {
 
 fn main() {
     let res = solve(&[1, 7, 2, 3, -7, -9, 10]);
+    println!("{res:?}");
+
+    let res = solve(&[4, 7, 1, 1, 2, -3, -7, 17, 15, -16]);
     println!("{res:?}");
 }
