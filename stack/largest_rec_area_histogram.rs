@@ -99,7 +99,7 @@ fn single_stack(a: &[i32]) -> i32 {
         while let Some(last) = v.last() {
             if a[*last as usize] > a[i] {
                 nse[*last as usize] = i as i32;
-                maxi = maxi.max((i as i32 - pse[i] - 1) * a[i]);
+                maxi = maxi.max((i as i32 - pse[*last as usize] - 1) * a[*last as usize]);
                 v.pop();
             } else {
                 pse[i] = *last;
@@ -110,7 +110,14 @@ fn single_stack(a: &[i32]) -> i32 {
         v.push(i as i32);
     }
 
-    // println!("PSE: {pse:?} \nNSE: {nse:?} \n{maxi}");
+    println!("V: {v:?}");
+    while let Some(tp) = v.pop() {
+        let pse = if let Some(last) = v.last() { *last } else { -1 };
+
+        maxi = maxi.max((n as i32 - pse - 1) * a[tp as usize]);
+    }
+
+    println!("PSE: {pse:?} \nNSE: {nse:?} \n{maxi}");
     maxi
 }
 
@@ -128,4 +135,6 @@ fn solve(a: &[i32]) {
 
 fn main() {
     solve(&[3, 1, 2, 4, 5, 6, 3, 6, 6]);
+    let res = single_stack(&[1, 0, 1, 0, 1]);
+    println!("Single Stack Res: {res}");
 }
