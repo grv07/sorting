@@ -14,6 +14,7 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod count_nodes_in_complete_bt;
 mod k_distance_nodes;
 mod lca;
 mod root_to_node_path;
@@ -157,4 +158,6 @@ fn main() {
     lca::solve();
 
     k_distance_nodes::solve();
+
+    count_nodes_in_complete_bt::solve();
 }
