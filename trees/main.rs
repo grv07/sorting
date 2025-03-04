@@ -15,6 +15,7 @@ mod pre_order;
 #[macro_use]
 mod tree;
 mod count_nodes_in_complete_bt;
+mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
 mod k_distance_nodes;
 mod lca;
@@ -164,9 +165,15 @@ fn main() {
     let root = in_pre_order_to_tree::solve();
 
     println!("\nBFS: ");
-    // bfs(&root);
     print!("ITR ");
     in_order_iter(&root);
     print!("ITR ");
     pre_order_iter(&root);
+
+    let root = in_post_ord_to_tree::solve();
+
+    print!("IN   ORD: ");
+    in_order_iter(&root);
+    print!("POST ORD: ");
+    post_order_iter(&root);
 }
