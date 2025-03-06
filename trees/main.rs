@@ -20,6 +20,7 @@ mod in_pre_order_to_tree;
 mod k_distance_nodes;
 mod lca;
 mod root_to_node_path;
+mod serde_tree;
 mod symmetrical_bst;
 mod tree_bfs;
 mod vertical_trv;
@@ -176,4 +177,6 @@ fn main() {
     in_order_iter(&root);
     print!("POST ORD: ");
     post_order_iter(&root);
+
+    serde_tree::solve();
 }
