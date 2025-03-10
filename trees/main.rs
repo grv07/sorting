@@ -14,10 +14,12 @@ mod post_order;
 mod pre_order;
 #[macro_use]
 mod tree;
+mod bst;
 mod count_nodes_in_complete_bt;
 mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
 mod k_distance_nodes;
+mod k_th_bst;
 mod lca;
 mod root_to_node_path;
 mod serde_tree;
@@ -179,4 +181,10 @@ fn main() {
     post_order_iter(&root);
 
     serde_tree::solve();
+    // println!("Root: {root:#?}");
+    // morries_traversal::solve(&mut Some(Box::new(root)));
+
+    bst::solve();
+
+    k_th_bst::solve();
 }
