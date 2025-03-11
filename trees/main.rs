@@ -18,6 +18,7 @@ mod bst;
 mod count_nodes_in_complete_bt;
 mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
+mod is_bst;
 mod k_distance_nodes;
 mod k_th_bst;
 mod lca;
@@ -187,4 +188,6 @@ fn main() {
     bst::solve();
 
     k_th_bst::solve();
+
+    is_bst::solve();
 }

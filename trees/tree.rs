@@ -62,6 +62,19 @@ pub fn create_tree(value: i32) -> Node<i32> {
 }
 
 #[macro_export]
+macro_rules! binary_tree2 {
+    ($value:expr $(, left => $left:expr)?  $(, right=> $right:expr)?) => {
+        Some(Box::new(Node {
+            value: $value,
+            left: binary_tree!(@opt $($left)?),
+            right: binary_tree!(@opt $($right)?),
+        }))
+    };
+    (@opt $child:expr) => { $child };
+    (@opt) => { None };
+}
+
+#[macro_export]
 macro_rules! binary_tree {
     // Base case: Leaf Node with no children
     ($value:expr) => {
