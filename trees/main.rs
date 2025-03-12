@@ -15,6 +15,7 @@ mod pre_order;
 #[macro_use]
 mod tree;
 mod bst;
+mod bst_lca;
 mod count_nodes_in_complete_bt;
 mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
@@ -190,4 +191,5 @@ fn main() {
     k_th_bst::solve();
 
     is_bst::solve();
+    bst_lca::solve();
 }
