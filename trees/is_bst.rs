@@ -1,4 +1,3 @@
-use std::ops::Range;
 use tree::Node;
 
 fn is_bst(root: &Node<i32>) -> bool {

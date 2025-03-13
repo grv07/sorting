@@ -16,6 +16,7 @@ mod pre_order;
 mod tree;
 mod bst;
 mod bst_lca;
+mod bst_traversal;
 mod count_nodes_in_complete_bt;
 mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
@@ -192,4 +193,5 @@ fn main() {
 
     is_bst::solve();
     bst_lca::solve();
+    bst_traversal::solve();
 }
