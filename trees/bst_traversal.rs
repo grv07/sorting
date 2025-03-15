@@ -49,6 +49,25 @@ impl<'a> TT<'a> {
 
         None
     }
+
+    fn next2(&mut self) -> Option<&Node<i32>> {
+        while let Some((node, cnt)) = self.v.pop() {
+            if cnt == 2 {
+                if let Some(right) = &node.right {
+                    self.v.push((right, 1));
+                }
+                return Some(node);
+            }
+
+            self.v.push((node, 2));
+
+            if let Some(left) = &node.left {
+                self.v.push((left, 1));
+            }
+        }
+
+        None
+    }
 }
 
 pub fn solve() {
@@ -63,9 +82,12 @@ pub fn solve() {
     );
 
     let mut tt = TT::init(&root);
-
-    println!(" --- ");
     while let Some(res) = tt.next() {
+        println!("Next: {:?}", res.value);
+    }
+
+    let mut tt = TT::init(&root);
+    while let Some(res) = tt.next2() {
         println!("Next: {:?}", res.value);
     }
 }
