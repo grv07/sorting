@@ -29,6 +29,7 @@ mod serde_tree;
 mod succ_pred_esessor_in_inorder;
 mod symmetrical_bst;
 mod tree_bfs;
+mod two_sum_bst;
 mod vertical_trv;
 mod zig_zag_trv;
 
@@ -196,4 +197,6 @@ fn main() {
     bst_lca::solve();
     bst_traversal::solve();
     succ_pred_esessor_in_inorder::solve();
+
+    two_sum_bst::solve();
 }

@@ -37,7 +37,7 @@ where
 
     let mut succ = None;
     while let Some(node) = root {
-        if k >= node.value {
+        if node.value <= k {
             root = node.right.as_deref();
         } else {
             succ = Some(node.value);
@@ -46,6 +46,25 @@ where
     }
 
     succ
+}
+
+fn preccessor<T>(root: &Node<T>, k: T) -> Option<T>
+where
+    T: std::cmp::PartialOrd + std::fmt::Debug + Copy,
+{
+    let mut root = Some(root);
+    let mut prdes = None;
+
+    while let Some(node) = root {
+        if node.value >= k {
+            root = node.left.as_deref();
+        } else {
+            prdes = Some(node.value);
+            root = node.right.as_deref();
+        }
+    }
+
+    prdes
 }
 
 pub fn solve() {
@@ -77,4 +96,13 @@ pub fn solve() {
     // If that node value not in tree
     assert_eq!(successor(&root, 3), Some(4));
     assert_eq!(successor(&root, 1), Some(4));
+
+    assert_eq!(preccessor(&root, 5), Some(4));
+    assert_eq!(preccessor(&root, 10), Some(8));
+    assert_eq!(preccessor(&root, 7), Some(6));
+    assert_eq!(preccessor(&root, 13), Some(11));
+    assert_eq!(preccessor(&root, 11), Some(10));
+    // If that node value not in tree
+    assert_eq!(preccessor(&root, 12), Some(11));
+    assert_eq!(preccessor(&root, 9), Some(8));
 }
