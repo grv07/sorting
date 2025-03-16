@@ -24,6 +24,7 @@ mod is_bst;
 mod k_distance_nodes;
 mod k_th_bst;
 mod lca;
+mod recover_bst;
 mod root_to_node_path;
 mod serde_tree;
 mod succ_pred_esessor_in_inorder;
@@ -199,4 +200,5 @@ fn main() {
     succ_pred_esessor_in_inorder::solve();
 
     two_sum_bst::solve();
+    recover_bst::solve();
 }
