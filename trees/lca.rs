@@ -32,42 +32,6 @@ where
     }
 }
 
-fn lca_iter<T>(root: &Node<T>, t: (T, T))
-where
-    T: std::fmt::Display + std::cmp::PartialEq + Copy + std::fmt::Debug,
-{
-    let mut v = vec![];
-    let mut v1 = vec![root];
-
-    while let Some(node) = v1.pop() {
-        v.push(node);
-
-        if let Some(node) = &node.right {
-            v1.push(node);
-        }
-        if let Some(node) = &node.left {
-            v1.push(node);
-        }
-    }
-
-    let mut check = (false, false);
-    for i in v.into_iter().rev() {
-        if check == (true, true) {
-            println!("LCA for {t:?} is {:?}", i.value);
-            return;
-        }
-
-        if i.value == t.0 {
-            check.0 = true;
-        }
-        if i.value == t.1 {
-            check.1 = true;
-        }
-
-        // println!("Post Ord: >>>>  {:?}", i.value);
-    }
-}
-
 pub fn solve() {
     let root = binary_tree!(
         1,
@@ -84,6 +48,4 @@ pub fn solve() {
 
     let res = lca(&root, (4, 7));
     println!("{:?}", res);
-
-    let res = lca_iter(&root, (4, 7));
 }
