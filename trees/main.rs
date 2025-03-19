@@ -18,12 +18,14 @@ mod bst;
 mod bst_lca;
 mod bst_traversal;
 mod count_nodes_in_complete_bt;
+mod find_max_path_sum;
 mod in_post_ord_to_tree;
 mod in_pre_order_to_tree;
 mod is_bst;
 mod k_distance_nodes;
 mod k_th_bst;
 mod lca;
+mod max_width;
 mod recover_bst;
 mod root_to_node_path;
 mod serde_tree;
@@ -201,4 +203,8 @@ fn main() {
 
     two_sum_bst::solve();
     recover_bst::solve();
+
+    find_max_path_sum::solve();
+
+    max_width::solve();
 }
