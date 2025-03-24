@@ -13,7 +13,7 @@ fn solve(a: &[i32]) -> i32 {
 
         ans = ans.min(mid_v);
 
-        if mid != low && low != high && mid_v == high_v && high_v == low_v {
+        if mid_v == high_v && high_v == low_v {
             low += 1;
             high -= 1;
             continue;
@@ -45,7 +45,7 @@ fn main() {
 
     // 4. Array with duplicates (worst-case binary search)
     assert_eq!(solve(&[2, 2, 2, 0, 1, 2]), 0);
-    assert_eq!(solve(&[10, 10, 10, 1, 10, 10, 10]), 1);
+    assert_eq!(solve(&[10, 10, 10, 0, 1, 10, 10, 10, 10]), 0);
 
     // 5. All elements are the same
     assert_eq!(solve(&[5, 5, 5, 5, 5]), 5);
